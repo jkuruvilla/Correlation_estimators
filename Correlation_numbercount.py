@@ -49,3 +49,5 @@ if __name__ == "__main__":
   num_particles = head.attrs.get('NumPart_Total')[1] # 1 - Halo type particles, refer GADGET
                                                      # user guide for more details.
   pos = snap["/PartType1/Coordinates"][:] #returns the positions of the particles
+
+  
