@@ -34,6 +34,7 @@ from ConfigParser import SafeConfigParser
 
 parser = SafeConfigParser()
 parser.read('config.ini')
+# Uses the read() method of SafeConfigParser to read the config file.
 
 # --------------------
 #   Program  start
@@ -41,7 +42,12 @@ parser.read('config.ini')
 
 if __name__ == "__main__":
 
-  input_file = parser.get('input','file')
+  input_file = parser.get('input','file') # input file is read from config file
   snap = h5py.File(input_file ,'r')
 
-  pos = snap["/PartType1/Coordinates"][:]
+  head = snap["Header"] # reads header of the hdf5 file
+  num_particles = head.attrs.get('NumPart_Total')[1] # 1 - Halo type partiles, refer GADGET
+                                                     # user guide for more details.
+  pos = snap["/PartType1/Coordinates"][:] #returns the positions of the particles
+
+  
