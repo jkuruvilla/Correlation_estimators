@@ -46,8 +46,6 @@ if __name__ == "__main__":
   snap = h5py.File(input_file ,'r')
 
   head = snap["Header"] # reads header of the hdf5 file
-  num_particles = head.attrs.get('NumPart_Total')[1] # 1 - Halo type partiles, refer GADGET
+  num_particles = head.attrs.get('NumPart_Total')[1] # 1 - Halo type particles, refer GADGET
                                                      # user guide for more details.
   pos = snap["/PartType1/Coordinates"][:] #returns the positions of the particles
-
-  
