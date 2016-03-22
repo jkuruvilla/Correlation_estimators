@@ -24,10 +24,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from libc.math cimport sqrt
 
+import numpy as np
 cimport numpy as np
 
-DTYPEf = np.float64
-ctypedef np.float64_t DTYPEf_t
+DTYPEf = np.float32
+ctypedef np.float32_t DTYPEf_t
 
 DTYPEi = np.int32
 ctypedef  np.int32_t DTYPEi_t
@@ -42,7 +43,7 @@ cimport cython
 # Defining functions
 # --------------------
 
-def DD_1d(np.ndarray[DTYPEf_t, ndim=3] data, int lower_index, int upper_index, float width, int num_bins, int num_particles):
+def DD_1d(np.ndarray[DTYPEf_t, ndim=2] data, int lower_index, int upper_index, float width, int num_bins, int num_particles):
   '''
   Function to find the 1D data-data average
   '''
@@ -53,7 +54,7 @@ def DD_1d(np.ndarray[DTYPEf_t, ndim=3] data, int lower_index, int upper_index, f
 
   for i in range(lower_index, upper_index):
     for j in range(i+1, num_particles):
-      distance = sqrt(((pos[j][0]-pos[i][0])*(pos[j][0]-pos[i][0]))+((pos[j][1]-pos[i][1])*(pos[j][1]-pos[i][1]))+((pos[j][2]-pos[i][2])*(pos[j][2]-pos[i][2])))
+      distance = sqrt(((data[j][0]-data[i][0])*(data[j][0]-data[i][0]))+((data[j][1]-data[i][1])*(data[j][1]-data[i][1]))+((data[j][2]-data[i][2])*(data[j][2]-data[i][2])))
       bin = np.int(distance//width)
       counter[bin] += 1
 
