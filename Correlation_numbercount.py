@@ -27,6 +27,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import numpy as np
 import h5py
 from ConfigParser import SafeConfigParser
+import num_counts as nc
 
 # -------------------
 # Config file reader
@@ -42,12 +43,17 @@ parser.read('config.ini')
 
 if __name__ == "__main__":
 
-  input_file = parser.get('input','file') # input file is read from config file
+  input_file = parser.get('input','file')            # input file is read from config file
   snap = h5py.File(input_file ,'r')
 
-  head = snap["Header"] # reads header of the hdf5 file
+  head = snap["Header"]                              # reads header of the hdf5 file
   num_particles = head.attrs.get('NumPart_Total')[1] # 1 - Halo type particles, refer GADGET
                                                      # user guide for more details.
-  pos = snap["/PartType1/Coordinates"][:] #returns the positions of the particles
+  pos = snap["/PartType1/Coordinates"][:]            # returns the positions of the particles
 
-  nssjsj
+  boxsize = int(parser.get('input', 'box_length'))   # boxsize in Mpc
+  bin_width = 0.5                                    # width of the bin
+  radial_bins = np.arange(0, boxsize, bin_width)     # defining the radial bins
+  n_bins = len(radial_bins)
+
+  DD = nc.DD_1d(pos, 0, num_particles, bin_width, n_bins, num_particles)
