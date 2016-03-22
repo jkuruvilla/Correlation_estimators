@@ -2,7 +2,7 @@
 __license__   = "GNU GPLv3 <https://www.gnu.org/licenses/gpl.txt>"
 __copyright__ = "2016, Joseph Kuruvilla"
 __author__    = "Joseph Kuruvilla <joseph.k@uni-bonn.de>"
-__version__   = "3.0"
+__version__   = "1.0"
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
