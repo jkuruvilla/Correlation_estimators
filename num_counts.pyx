@@ -25,13 +25,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 from libc.math cimport sqrt
 
 import numpy as np
+from numpy cimport ndarray
+from numpy cimport int
 cimport numpy as np
 
 DTYPEf = np.float32
 ctypedef np.float32_t DTYPEf_t
 
-DTYPEi = np.int32
-ctypedef  np.int32_t DTYPEi_t
+DTYPEff = np.int64
+ctypedef  np.int64_t DTYPEff_t
 
 cimport cython
 
@@ -49,13 +51,14 @@ def DD_1d(np.ndarray[DTYPEf_t, ndim=2] data, int lower_index, int upper_index, f
   '''
   cdef: # declaring c types for our variables
     float distance = 0.0
-    np.ndarray[DTYPEi_t, ndim=1] counter = np.empty(num_bins, dtype=np.int32)
-    int i, j, bin
+    ndarray[DTYPEf_t, ndim=1] counter = np.zeros(num_bins, dtype=np.float32)
+    Py_ssize_t i, j
+    int bin
 
   for i in range(lower_index, upper_index):
     for j in range(i+1, num_particles):
-      distance = sqrt(((data[j][0]-data[i][0])*(data[j][0]-data[i][0]))+((data[j][1]-data[i][1])*(data[j][1]-data[i][1]))+((data[j][2]-data[i][2])*(data[j][2]-data[i][2])))
-      bin = np.int(distance//width)
+      distance = sqrt(((data[j,0]-data[i,0])*(data[j,0]-data[i,0]))+((data[j,1]-data[i,1])*(data[j,1]-data[i,1]))+((data[j,2]-data[i,2])*(data[j,2]-data[i,2])))
+      bin = int(distance//width)
       counter[bin] += 1
 
   return counter
